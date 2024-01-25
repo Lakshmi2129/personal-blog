@@ -47,7 +47,7 @@ const blog_posts = () => {
         for (i = 0; i < resData.length; i++) {
             console.log(resData[i], ">>>>>>>>>>>>>>>>>>")
 
-            ele += `<div class="card" style="width: 22rem;">
+            ele += `<div class="col-4 card" style="width: 22rem;">
             <img src="${(resData[i].image)}" class="card-img-top" alt="...">
 
             <div class="post_icons">
@@ -170,4 +170,60 @@ const blog_delete = (camId) => {
         }
 
     })
+}
+
+
+// AddBlog post 
+
+CKEDITOR.replace('summary');
+
+function submitForm() {
+    var formData = new FormData(document.getElementById('post_form'));
+    var contentValue = CKEDITOR.instances.id_content.getData();
+    formData.append('content', contentValue);
+    var form_data = {
+        'title': $('#title').val(),
+        'content': $('#content').val(),
+        'image': $('#image').val(),
+        'summary': $('#summary').val(),
+    }
+
+    fetch('post_form', {
+            method: 'POST',
+            body: formData,
+            // headers: {
+            //     'X-CSRFToken': '{{ csrf_token }}',
+            // },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', res);
+            if (res["res"] == "success") {
+                $("#post_form").trigger("reset")
+                hideModal('add_blog_post_modal')
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: res['msg'],
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: res['msg'],
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            setTimeout(() => {
+                location.reload(true);
+            }, "1800");
+
+            blog_posts();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }

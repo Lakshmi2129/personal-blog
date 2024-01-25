@@ -4,7 +4,8 @@ const blog_posts = () => {
         var resData = res
         count = 0;
         for (i = 0; i < resData.length; i++) {
-            ele += `<div class="card" style="width: 22rem;">
+            ele += `<div class="container"><div class="row">
+                <div class="col-md-4 mb-4"><div class="card" style="width: 22rem;">
             <img src="${(resData[i].image)}" class="card-img-top" alt="...">
 
             <div class="card-body">
@@ -23,7 +24,9 @@ const blog_posts = () => {
                 </div>
                 <p class="card-text mt-2">${(resData[i].content)}</p>
             </div>
-
+            </div>
+            </div>
+            </div>
         </div>`
 
         }
