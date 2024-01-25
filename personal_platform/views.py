@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
@@ -7,22 +8,25 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.http import QueryDict
 from .models import *
+import datetime
 
 
 # Create your views here.
-
 def Login(request):
   return render(request, 'login.html')
 
 def register(request):
     return render(request, 'signup.html')
 
+@login_required(login_url='Login')
 def home(request):
   return render(request,'index.html')
 
+@login_required(login_url='Login')
 def posts(request):
   return render(request,'post.html')
 
+@login_required(login_url='Login')
 def css_frameworks(request):
   return render(request, 'css_frameworks.html')
 
@@ -68,12 +72,13 @@ def add_post_blogs(request):
     content = request.POST['content']
     image = request.POST['image']
     summary = request.POST['summary']
+    current_date_time = datetime.datetime.now()
     data = add_post.objects.filter(title=title)
     if len(data) == 1:
       return JsonResponse({"res":"failed",'msg':"Post already Exists!"})
     else:
       # add_post.objects.create(title=title,content=content,image=image,summary=summary,author=request.user)
-      new_post = add_post(title=title, content=content, image=image, summary=summary, author=request.user)
+      new_post = add_post(title=title, content=content, image=image, summary=summary, author=request.user,time=current_date_time)
       new_post.save()
       return JsonResponse({"res":"success","msg":"Post added Successfully!"})
     
@@ -101,6 +106,24 @@ def add_post_blogs(request):
     sft = add_post.objects.get(pk=delete.get('pk'))
     sft.delete()
     return JsonResponse({"res":"success","msg":"Deleted Succesfully"})
+  
+  
+def get_data(request):  
+  if request.method == 'POST':
+    id = request.POST.get('id')
+    print(id,'++++++++++++++')
+    add_post_instances = add_post.objects.filter(id=id)
+
+    # Now you have a queryset containing all instances that match the id
+    # You can iterate through add_post_instances to access each instance's data
+    for add_post_instance in add_post_instances:
+        # Access attributes of each instance, e.g., add_post_instance.author, add_post_instance.title, etc.
+        print(add_post_instance)
+
+    # If you want to convert the queryset to a list
+    add_post_list = list(add_post_instances)
+
+    
   
   
           

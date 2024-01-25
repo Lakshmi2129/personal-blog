@@ -3,47 +3,46 @@ const blog_posts = () => {
         var ele = '';
         var resData = res
         count = 0;
+
+        console.log(res.length, ">>>>>>>>>>>>>")
         for (i = 0; i < resData.length; i++) {
-            ele += `<div class="container"><div class="row">
-                <div class="col-md-4 mb-4"><div class="card" style="width: 22rem;">
-            <img src="${(resData[i].image)}" class="card-img-top" alt="...">
+            if (i % 3 === 0) {
+                ele += '<div class="row mt-4 d-flex justify-content-around">';
+            }
 
-            <div class="card-body">
-                <h3 class="card-title">
-                    <div class="post_content">
-                        <h3><a href="css_frameworks?${(resData[i].pk)}?">${(resData[i].title)}</a>
-                        </h3>
-                    </div>
+            var link = `id=${resData[i].pk}&`
 
-                </h3>
-                <div class="mt-2 d-flex justify-content-between author">
-                    <small>${(resData[i].author )}</small>
-                    <small>${timeAgo(resData[i].time)}</small>
-                    <small>2 likes</small>
+            ele += '<div class="col-4 card" style="width: 22rem;">' +
+                '<img src="' + resData[i].image + '" class="card-img-top" alt="..." height="220" width="347">' +
+                '<div class="card-body">' +
+                '<h3 class="card-title">' +
+                '<div class="post_content">' +
+                '<h3><a href=""css_frameworks?' + link + '">' + resData[i].title + '</a>' +
+                '</h3>' +
+                '</div>' +
+                '</h3>' +
+                '<p class="card-text mt-2">' + resData[i].content + '</p>' +
+                '</div>' +
+                '<div class="mt-2 author">' +
+                '<small>' + '<span class="mdi mdi-account" style="cursor:pointer;font-size:20px;margin-top:3px"></span>' +
+                '<span style="margin-left:2px">' + resData[i].author + '</span>' + '</small > ' +
 
-                </div>
-                <p class="card-text mt-2">${(resData[i].content)}</p>
-            </div>
-            </div>
-            </div>
-            </div>
-        </div>`
+                '<small>' + '<span class="mdi mdi-timer" style="cursor:pointer;font-size:20px;margin-top:3px"></span>' +
+                '<span style="margin-left:2px">' + timeAgo(resData[i].time) + '</span>' + '</small > ' +
 
+                '</div>' +
+                '</div>';
+
+            if ((i + 1) % 3 === 0 || i === resData.length - 1) {
+                ele += '</div>';
+            }
+        }
+
+        if (res.length == 0) {
+            $('#home_id').html(`No Blogs Found`)
         }
 
         $('#home_page').html(ele)
     });
 }
 blog_posts();
-
-
-$(document).ready(function() {
-    // Retrieve pk from the URL query string
-    const urlParams = new URLSearchParams(window.location.search);
-    const pk = urlParams.get('pk');
-
-    // Use pk to fetch content from the server and display it on the page
-    $.get(`get_content_by_pk?pk=${pk}`, function(content) {
-        $('#content-container').html(content);
-    });
-});

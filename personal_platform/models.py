@@ -9,7 +9,7 @@ class add_post(models.Model):
   content = models.CharField(max_length=1500,default="NA")
   image = models.CharField(max_length=300, default="NA")
   summary = RichTextField()
-  time = models.DateTimeField(auto_now_add=True)
+  time = models.DateTimeField()
   author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
   
   def __str__(self):

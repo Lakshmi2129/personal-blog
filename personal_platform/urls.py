@@ -9,5 +9,6 @@ urlpatterns = [
   path('posts',posts,name='posts'),
   path('add_post_blogs',add_post_blogs,name='add_post_blogs'),
   path('css_frameworks',css_frameworks,name='css_frameworks'),
+  path('get_data',get_data,name='get_data'),
   path('',home,name='home')
 ]

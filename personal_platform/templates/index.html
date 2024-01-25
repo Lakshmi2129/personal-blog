@@ -5,14 +5,16 @@
 <head>
     <title>Webpage Design</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/mdi/css/materialdesignicons.min.css' %}">
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 
     <div class="main">
-        <div class="navbar">
-            <img class="mt-2 logo" src="../static/images/logo.png" alt="" height="90">
+        <div class="navbar p-0">
+            <img class="logo" src="../static/images/logo.png" alt="" height="60">
 
             <div class="menu">
                 <ul>
@@ -28,11 +30,11 @@
 
         </div>
 
-        <div class="d-flex mt-5" id="home_page">
-            <h1><span>No Blogs Available</span></h1>
-        </div>
-    </div>
-    </div>
+        <div class="row mt-5" id="home_page"></div>
+
+        <h1 class="text-center bolder text-light" id="home_id">
+        </h1>
+
     </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script type="application/javascript " src="{% static 'js/vendors/jquery.min.js' %} "></script>
