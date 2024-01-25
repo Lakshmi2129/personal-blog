@@ -49,6 +49,12 @@
     background-color: #fff;
 }
 
+.toggle-password {
+    position: absolute;
+    left: 245px;
+    margin-top: 2.5rem;
+}
+
 .form {
     max-width: 250px;
     height: 320px;

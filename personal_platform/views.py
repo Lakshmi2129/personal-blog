@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.http import QueryDict
 from .models import *
 import datetime
+from django.db import connection
 
 
 # Create your views here.
@@ -27,8 +28,8 @@ def posts(request):
   return render(request,'post.html')
 
 @login_required(login_url='Login')
-def css_frameworks(request):
-  return render(request, 'css_frameworks.html')
+def blog_view(request):
+  return render(request, 'blog_view.html')
 
 
 def signup(request):
@@ -93,35 +94,38 @@ def add_post_blogs(request):
     
   elif request.method == "PUT":
     put = QueryDict(request.body)
-    edit = add_post.objects.get(id=put.get('pk'))
-    edit.title=put.get('edit_title')
-    edit.content=put.get('edit_content')
-    edit.image=put.get('edit_image')
-    edit.summary=put.get('edit_summary')
+    edit = add_post.objects.get(id=put.get("pk"))
+    edit.title=put.get('title')
+    edit.content=put.get('content')
+    edit.image=put.get('image')
+    edit.summary=put.get('summary')
     edit.save()
     return JsonResponse({"res":"success","msg":"Post Updated Successfully!"})
+  
     
   elif request.method == "DELETE":
     delete = QueryDict(request.body)
     sft = add_post.objects.get(pk=delete.get('pk'))
     sft.delete()
     return JsonResponse({"res":"success","msg":"Deleted Succesfully"})
-  
+
+
+def custom_sql(query):
+    cursor = connection.cursor()
+    cursor.execute(query)
+    row = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return row
+
+
   
 def get_data(request):  
   if request.method == 'POST':
     id = request.POST.get('id')
-    print(id,'++++++++++++++')
-    add_post_instances = add_post.objects.filter(id=id)
+    ids = custom_sql(f"select * from personal_platform_add_post where id='{id}'")
 
-    # Now you have a queryset containing all instances that match the id
-    # You can iterate through add_post_instances to access each instance's data
-    for add_post_instance in add_post_instances:
-        # Access attributes of each instance, e.g., add_post_instance.author, add_post_instance.title, etc.
-        print(add_post_instance)
-
-    # If you want to convert the queryset to a list
-    add_post_list = list(add_post_instances)
+    return JsonResponse({"id":ids})
 
     
   

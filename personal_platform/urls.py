@@ -8,7 +8,7 @@ urlpatterns = [
   path('signup',signup,name='signup'),
   path('posts',posts,name='posts'),
   path('add_post_blogs',add_post_blogs,name='add_post_blogs'),
-  path('css_frameworks',css_frameworks,name='css_frameworks'),
+  path('blog_view',blog_view,name='blog_view'),
   path('get_data',get_data,name='get_data'),
   path('',home,name='home')
 ]

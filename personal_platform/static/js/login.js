@@ -49,3 +49,20 @@ $("#register_form").on('submit', function(e) {
     })
     return false
 })
+
+
+
+$(document).ready(function() {
+    $('.toggle-password').on('click', function() {
+        var passwordField = $('.password-field');
+        var passwordFieldType = passwordField.attr('type');
+
+        if (passwordFieldType === 'password') {
+            passwordField.attr('type', 'text');
+            $('.toggle-password').removeClass('mdi-eye').addClass('mdi-eye-off');
+        } else {
+            passwordField.attr('type', 'password');
+            $('.toggle-password').removeClass('mdi-eye-off').addClass('mdi-eye');
+        }
+    });
+});

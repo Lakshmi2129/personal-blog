@@ -30,7 +30,7 @@ body {
     /* font-size: 24px; */
     font-size: 35px;
     padding: 10px;
-    margin-top: 5px;
+    margin-top: 20px;
 }
 
 .logout {
@@ -209,6 +209,52 @@ ul li a:hover {
 
 #blogs_id img:hover {
     filter: blur(10px);
+}
+
+.fullview_menu {
+    top: -20px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+}
+
+.header {
+    text-align: left;
+    color: #ff7200;
+    font-size: 4rem;
+    position: absolute;
+    margin-top: 0px;
+}
+
+.full_img {
+    position: relative;
+    top: 110px;
+    width: 680px;
+    height: 350px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+.full_content {
+    position: absolute;
+    top: 480px;
+    font-size: 20px;
+    color: white;
+    margin-top: 1rem;
+}
+
+.full_summary {
+    position: absolute;
+    top: 530px;
+    font-size: 20px;
+    color: white;
+    margin-top: 1rem;
+    font-weight: 200;
+}
+
+.container {
+    position: absolute;
+    left: 65px;
 }
 
 @media (max-width: 768px) {

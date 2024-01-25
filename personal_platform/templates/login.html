@@ -4,6 +4,7 @@
 
 <head>
     <title>Webpage Design</title>
+    <link rel="stylesheet" href="{% static 'css/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 
@@ -16,8 +17,14 @@
 
             <form class="form" id="login_form">
                 <h2>Login Here</h2>
-                <input type="text" name="username" placeholder="Enter Username Here" required>
-                <input type="password" name="password" placeholder="Enter Password Here" required>
+                <input type="text" name="username" placeholder="Enter Username Here" autocomplete=" off " required>
+                <div style="display:flex">
+                    <input type="password" name="password" class="password-field" placeholder="Enter Password Here" autocomplete=" off " required>
+                    <span class="mdi mdi-eye field-icon toggle-password mx-3">
+                        </span>
+                </div>
+
+
                 <button type="submit" class="btnn">Login</button>
 
                 <p class="link">Don't have an account<br>
