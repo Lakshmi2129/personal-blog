@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.utils import timezone
 from django.contrib import auth
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
@@ -6,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.http import QueryDict
 from .models import *
+
 
 # Create your views here.
 
@@ -56,8 +58,7 @@ def signin(request):
       return JsonResponse({'res': 'failed', 'msg': 'Invalid credentials'})
   else:
     return render(request, "login.html")
-  
-  
+
 
      
 def add_post_blogs(request):
@@ -71,21 +72,27 @@ def add_post_blogs(request):
     if len(data) == 1:
       return JsonResponse({"res":"failed",'msg':"Post already Exists!"})
     else:
-      add_post.objects.create(title=title,content=content,image=image,summary=summary)
+      # add_post.objects.create(title=title,content=content,image=image,summary=summary,author=request.user)
+      new_post = add_post(title=title, content=content, image=image, summary=summary, author=request.user)
+      new_post.save()
       return JsonResponse({"res":"success","msg":"Post added Successfully!"})
-          
+    
   elif request.method == "GET":
     data =add_post.objects.all()
     api = []
     for i in data:
-      api.append({"pk":i.id,"title":i.title,"content":i.content,"image":i.image,"summary":i.summary})
+      local_time = timezone.localtime(i.time)
+      created_at = local_time.strftime("%Y-%m-%d %H:%M:%S")
+      api.append({"pk":i.id,"title":i.title,"content":i.content,"image":i.image,"summary":i.summary,"author": i.author.username,"time": created_at})
     return JsonResponse(api,safe=False)
     
   elif request.method == "PUT":
     put = QueryDict(request.body)
     edit = add_post.objects.get(id=put.get('pk'))
     edit.title=put.get('edit_title')
+    edit.content=put.get('edit_content')
     edit.image=put.get('edit_image')
+    edit.summary=put.get('edit_summary')
     edit.save()
     return JsonResponse({"res":"success","msg":"Post Updated Successfully!"})
     
@@ -94,5 +101,8 @@ def add_post_blogs(request):
     sft = add_post.objects.get(pk=delete.get('pk'))
     sft.delete()
     return JsonResponse({"res":"success","msg":"Deleted Succesfully"})
+  
+  
+          
    
       

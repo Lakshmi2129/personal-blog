@@ -4,28 +4,27 @@ const blog_posts = () => {
         var resData = res
         count = 0;
         for (i = 0; i < resData.length; i++) {
-            console.log(resData[i], ">>>>>>>>>>>>>")
-
             ele += `<div class="card" style="width: 22rem;">
             <img src="${(resData[i].image)}" class="card-img-top" alt="...">
-          <div class="card-body">
-              <h3 class="card-title">
-                  <div class="post_content">
-                      <h3><a href="css_frameworks?${(resData[i].pk)}?">${(resData[i].title)}</a>
-                      </h3>
-                  </div>
 
-              </h3>
-              <div class="mt-2 d-flex justify-content-between author">
-                  <small>${(resData[i].author)}</small>
-                  <small>3 mins ago</small>
-                  <small>2 likes</small>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <div class="post_content">
+                        <h3><a href="css_frameworks?${(resData[i].pk)}?">${(resData[i].title)}</a>
+                        </h3>
+                    </div>
 
-              </div>
-              <p class="card-text mt-2">${(resData[i].content)}</p>
-          </div>
+                </h3>
+                <div class="mt-2 d-flex justify-content-between author">
+                    <small>${(resData[i].author )}</small>
+                    <small>${timeAgo(resData[i].time)}</small>
+                    <small>2 likes</small>
 
-      </div>`
+                </div>
+                <p class="card-text mt-2">${(resData[i].content)}</p>
+            </div>
+
+        </div>`
 
         }
 
@@ -33,3 +32,15 @@ const blog_posts = () => {
     });
 }
 blog_posts();
+
+
+$(document).ready(function() {
+    // Retrieve pk from the URL query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const pk = urlParams.get('pk');
+
+    // Use pk to fetch content from the server and display it on the page
+    $.get(`get_content_by_pk?pk=${pk}`, function(content) {
+        $('#content-container').html(content);
+    });
+});

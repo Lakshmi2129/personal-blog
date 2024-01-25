@@ -3,7 +3,6 @@ $("#login_form").on('submit', function(e) {
     var form_data = $(this).serialize()
     $.post("signin", form_data, function(res) {
         if (res["res"] == "success") {
-            alert("***********")
             location.href = '/';
         } else {
             Swal.fire({

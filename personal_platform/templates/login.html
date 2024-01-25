@@ -4,29 +4,30 @@
 
 <head>
     <title>Webpage Design</title>
-    <link rel="stylesheet" href=" {% static 'css/login.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 
 <body>
 
-    <div class="main ">
-        <div class="content ">
+    <div class="main">
+        <img class="mt-2 logo" src="../static/images/logo.png" alt="" height="90">
+
+        <div class="content">
 
             <form class="form" id="login_form">
                 <h2>Login Here</h2>
                 <input type="text" name="username" placeholder="Enter Username Here" required>
                 <input type="password" name="password" placeholder="Enter Password Here" required>
-                <button type="submit" class="btnn ">Login</button>
+                <button type="submit" class="btnn">Login</button>
 
-                <p class="link ">Don't have an account<br>
+                <p class="link">Don't have an account<br>
                     <a href="Register">Sign up </a> here</a>
                 </p>
             </form>
         </div>
     </div>
-    </div>
-    </div>
-    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js "></script>
+
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script type="application/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/vendors/sweetalert2@10.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/login.js'%}"></script>
